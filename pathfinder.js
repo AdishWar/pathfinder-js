@@ -1,29 +1,31 @@
 
+// GLOBAL PARAMETERS
 canvasSize = 600;
+arrSize = 15;
+startCoord = [1,1];
+endCoord = [13,12];
+cellSize = canvasSize/arrSize;
+blockedPoints = [
+    // [4,6],
+    // [5,6],
+    // [6,6],
+    // [7,6]
+];
+
+// END OF GLOBAL PARAMETERS
+
 function setup() {
     createCanvas(canvasSize,canvasSize);
 
     pixelDensity(1);
     // noStroke();
     stroke('grey');
-    // noLoop();
     background('black');
-    alert('Close this popup, click on canvas so that it gets in focus and press any key to advance the path')
+    // alert('Close this popup, click on canvas so that it gets in focus and press any key to advance the path. Click on cells to add a "wall" there.')
+    // noLoop();
 }
 
-// GLOBAL PARAMETERS
-arrSize = 50;
-startCoord = [1,1];
-endCoord = [40,32];
-cellSize = canvasSize/arrSize;
-blockedPoints = [
-    [4,6],
-    [5,6],
-    [6,6],
-    [7,6]
-];
 
-// END 
 
 // arr is the map matrix
 arr = []
@@ -168,14 +170,14 @@ function drawCells(amountPathDraw) {
     path_full = path(startCoord, endCoord);
 
     // use below 3 LOC if amountpathdraw is in percentage
-    ppd = amountPathDraw;
-    ppd = map( ppd, 0, 100, 0, path_full.length );
-    path_slice = path_full.slice(0,ppd);
+    // ppd = amountPathDraw;
+    // ppd = map( ppd, 0, 100, 0, path_full.length );
+    // path_slice = path_full.slice(0,ppd);
 
     // use below 2 LOC if amountpathdraw is in number of blocks of path to draw
-    // apd = amountPathDraw;
+    apd = amountPathDraw;
     // if(apd == path_full.length) { alert('Destination reached'); }
-    // path_slice = path_full.slice(0,apd);
+    path_slice = path_full.slice(0,apd);
 
     // run nested loop i, j for every point in the "map"
     for( i = 0; i < arrSize; i++) {
@@ -233,21 +235,28 @@ function keyTyped() {
 }
 qq = 0;
 
+function mouseClicked() {
+    x = floor(mouseX / cellSize);
+    y = floor(mouseY / cellSize);
+    cell = [x,y];
+    blockedPoints.push(cell);
+};
+
 function draw() {
-    // time taken to finish animation times 10
-    finishTime = 30;
+    // // time taken to finish animation times 10
+    // finishTime = 30;
 
-    // sec = seconds passed since start of program divided by 10
-    sec = Math.round(millis()/100);
+    // // sec = seconds passed since start of program divided by 10
+    // sec = Math.round(millis()/100);
 
-    // percentagePathDraw = 100;
+    // // percentagePathDraw = 100;
 
-    // ppd is percentagePathDraw
-    // for(ppd = 0; ppd <= 100; ppd++){
-    // }
-    pft = map(sec, 0, finishTime, 0, 100)
+    // // ppd is percentagePathDraw
+    // // for(ppd = 0; ppd <= 100; ppd++){
+    // // }
+    // pft = map(sec, 0, finishTime, 0, 100)
 
-    drawCells( pft );
+    drawCells( qq );
 
 }
 
