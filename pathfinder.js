@@ -1,10 +1,14 @@
 
-// GLOBAL PARAMETERS
-canvasSize = 600;
-arrSize = 15;
-startCoord = [1,1];
-endCoord = [13,12];
-cellSize = canvasSize/arrSize;
+// GLOBAL VARIABLES
+canvasSize = 600;  // 600 X 600 pixels canvas
+
+// you can modify below 3 variables.
+arrSize = 15;      // 15 X 15 size map
+startCoord = [1,1];  // starting coord 
+endCoord = [13,12];  // destination coord 
+
+// dont modify cellsize and blockedPoints[]
+cellSize = canvasSize/arrSize;  
 blockedPoints = [
     // [4,6],
     // [5,6],
@@ -12,7 +16,7 @@ blockedPoints = [
     // [7,6]
 ];
 
-// END OF GLOBAL PARAMETERS
+// END OF GLOBAL VARIABLES
 
 function setup() {
     createCanvas(canvasSize,canvasSize);
@@ -22,7 +26,7 @@ function setup() {
     stroke('grey');
     background('black');
     // alert('Close this popup, click on canvas so that it gets in focus and press any key to advance the path. Click on cells to add a "wall" there.')
-    // noLoop();
+    noLoop();
 }
 
 
@@ -210,16 +214,20 @@ function drawCells(amountPathDraw) {
                 if(thisCell[0] == startCoord[0] && thisCell[1] == startCoord[1]) {
                     // thisCell is startcell
                     fill('red');
-                } else if( thisCell[0] == endCoord[0] && thisCell[1] == endCoord[1] ) {
-                    // thisCell is endCell
-                    fill('green');
-                } else if ( isContainedInBlocked == true ) {
+                } 
+                else if ( isContainedInBlocked == true ) {
                     // thisCell is blockedCell
                     fill('blue');
-                } else if (isContainedInPath == true) {
+                } 
+                else if (isContainedInPath == true) {
                     // thisCell is in path
                     fill('white');
-                } else {
+                }
+                else if( thisCell[0] == endCoord[0] && thisCell[1] == endCoord[1] ) {
+                    // thisCell is endCell
+                    fill('green');
+                } 
+                else {
                     fill(200);
                 }
             
@@ -232,6 +240,7 @@ function drawCells(amountPathDraw) {
 
 function keyTyped() {
     qq++;
+    drawCells( qq );
 }
 qq = 0;
 
@@ -240,6 +249,7 @@ function mouseClicked() {
     y = floor(mouseY / cellSize);
     cell = [x,y];
     blockedPoints.push(cell);
+    drawCells( qq );
 };
 
 function draw() {
@@ -256,7 +266,7 @@ function draw() {
     // // }
     // pft = map(sec, 0, finishTime, 0, 100)
 
-    drawCells( qq );
+    drawCells( 0 );
 
 }
 
